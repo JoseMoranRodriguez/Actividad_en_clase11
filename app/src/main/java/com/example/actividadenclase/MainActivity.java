@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public void modificarInformacion(View v){
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,"administracion",null,1);
         SQLiteDatabase bd = admin.getWritableDatabase();
-        String matriculaText = nombres.getText().toString();
+        String matriculaText = matricula.getText().toString();
         String nombresText = nombres.getText().toString();
         String libroText = libro.getText().toString();
         String diaText = dia.getText().toString();
@@ -90,13 +90,18 @@ public class MainActivity extends AppCompatActivity {
             if(nombresText.isEmpty()||libroText.isEmpty()||diaText.isEmpty()){
                 Toast.makeText(this, "Ingrese todos los datos", Toast.LENGTH_SHORT).show();
             }
-            bd.execSQL("update estudiantes set id_estudiante="+matriculaText+",nombres='"+nombresText+"',libro='"+libroText+"',dia='"+diaText+"' where id_estudiante="+matriculaText );
-            matricula.setText("");
-            nombres.setText("");
-            libro.setText("");
-            dia.setText("");
-            bd.close();
-            Toast.makeText(this, "Se modificaron los datos", Toast.LENGTH_SHORT).show();
+            try {
+                bd.execSQL("update estudiantes set id_estudiante="+ matriculaText + ",nombres='" + nombresText + "',libro='" + libroText + "',dia='" + diaText + "' where id_estudiante=" + matriculaText);
+                matricula.setText("");
+                nombres.setText("");
+                libro.setText("");
+                dia.setText("");
+                bd.close();
+                Toast.makeText(this, "Se modificaron los datos", Toast.LENGTH_SHORT).show();
+            }
+            catch(Exception e){
+
+            }
         }else{
             Toast.makeText(this, "Ingrese una matricula", Toast.LENGTH_SHORT).show();
         }
